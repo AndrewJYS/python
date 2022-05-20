@@ -267,30 +267,6 @@ int main() {
 }
 ```
 
-## 匿名函数（lambda）  
-
-Python中，匿名函数指的是没有名字的函数，应用在需要一个函数，但是又不想去命名这个函数，这种函数只使用一次。语法如下：  
-
-```python
-result = lambda [arg1 [, arg2, ..., argn]]: expression
-```
-
-result:用于调用lambda的表达式  
-[arg1 [, arg2, ..., argn]]:可选参数，用于指定要传递的参数列表，多个参数用逗号分隔  
-expression:必选参数，用于指定一个实现具体功能的表达式。如果有参数，则在表达式中使用这些参数。  
-
-**注意：**  
-**使用lambda表达式时，表达式只能有一个，即只能返回一个值，也不能出现其他非表达式语句，如for, while**  
-
-用法如下：  
-
-```python
-import math
-r: int = 10
-result: float = lambda r: math.pi * r * r
-print(result(r))  # output 314.1592653589793
-```
-
 ## 使用注解改进文档  
 
 使用注解可以提高代码的可读性，比如可以增加函数的返回类型，增加参数的注解，增加函数功能的说明，**但是，这些注解并不会帮助检查类型，不会有任何其他的行为**
@@ -315,8 +291,44 @@ search_for_letters(phrase: str, letters: str = 'aeiou') -> set
     Returns the set of 'letters' found in 'phrase'.
 ```
 
+## 带有默认参数的函数  
+
+（1）如果默认值是可变容器的话，比如说列表、集合或者字典，那么应该把None 作为默认值  
+（2）如果不打算提供一个默认值，只是想编写代码来检测可选参数是否被赋予了某个特定的值，那么可以采用下面的惯用手法（不要用None, 0 或者False来检测）：  
+
+```python
+_no_value = object()
+def spam(a, b=_no_value):
+    if b is _no_value:
+        print('No b value supplied')
+    else:
+        print('OK')
+
+spam(1) # No b value supplied
+spam(1, 3) # OK
+```
+
+### 默认参数绑定  
+
+对默认参数的赋值只会在函数定义的时候绑定一次  
+
+```python
+x = 42
+def spam(a, b=x):
+    print(a, b)
+
+spam(1) # 1 42
+x = 32
+spam(1) # 1 42
+```
+
+**注意：**  
+**给默认参数赋值的应该总是不可变的对象，比如None、True、False、数字或者字符串，否则会陷入隐匿的问题中**  
+
+
 ## 参考  
 
+Python Cookbook Chapter 7  
 C++ Primer Plus, chapter 2, 7  
 Head First Python Chapter 4  
 零基础学Python Chapter 6  

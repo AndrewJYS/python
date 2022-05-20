@@ -1,6 +1,60 @@
 # function-advanced  
 
-## 嵌套函数  
+## 匿名函数（lambda）  
+
+### 定义与基本用法  
+
+Python中，匿名函数指的是没有名字的函数，应用在需要一个函数，但是又不想去命名这个函数，这种函数只使用一次。语法如下：  
+
+```python
+result = lambda [arg1 [, arg2, ..., argn]]: expression
+```
+
+result:用于调用lambda的表达式  
+[arg1 [, arg2, ..., argn]]:可选参数，用于指定要传递的参数列表，多个参数用逗号分隔  
+expression:必选参数，用于指定一个实现具体功能的表达式。如果有参数，则在表达式中使用这些参数。  
+
+**注意：**  
+**使用lambda表达式时，表达式只能有一个，即只能返回一个值，也不能出现其他非表达式语句，如for, while**  
+
+用法如下：  
+
+```python
+import math
+r: int = 10
+result: float = lambda r: math.pi * r * r
+print(result(r))  # output 314.1592653589793
+```
+
+### 在匿名函数中绑定变量的值  
+
+lambda 表达式中用到的x 是一个自由变量，在运行时才进行绑定而不是定义的时候绑定。因此，lambda 表达式中x 的值应该是在执行时确定的，执行时x的值是多少就是多少  
+
+```python
+x = 10
+a = lambda y: x + y
+x = 20
+b = lambda y: x + y
+print(a(10)) # 30
+print(b(10)) # 30
+```
+
+如果希望匿名函数在定义的时候绑定参数，则使用下述代码（给匿名函数的参数及时赋值）  
+
+```python
+x = 10
+a = lambda y, x=x: x + y
+x = 20
+b = lambda y, x=x: x + y
+print(a(10)) # 20
+print(b(10)) # 30
+
+funcs = [lambda x, n=n: x+n for n in range(5)]
+for f in funcs:
+    print(f(0), end=' ') # 0 1 2 3 4 
+```
+
+## 嵌套函数，闭包  
 
 Python中，函数代码组中，可以是任意代码，这也包括定义另一个函数的代码，通常称为嵌套或内部函数。还可以从外部函数返回内部函数，实际上，返回的是一个函数对象。  
 
@@ -31,6 +85,21 @@ def outer():
 
 i = outer() # this is outer, invoking inner
 i() # This is inner
+```
+
+再举一个内部外部函数都有参数的例子（可能比较牵强的例子，但是**闭包的作用在于将只有单个方法的类转换成函数**）。简单来说，闭包就是一个函数，但是它还保存着额外的变量环境，使得这些变量可以在函数中使用。闭包的核心特性就是它可以记住定义闭包时的环境。下面的例子中，inner函数会记住outer函数的参数str_list，然后在随后的调用中使用该值。  
+
+```python
+def find_n_first(str_list: list, num: int):
+    print(str_list[0: num])
+
+def outer(str_list: list):
+    def inner(*args, **kwargs):
+        return find_n_first(str_list, *args, **kwargs)
+    return inner
+
+i = outer(['1','2','3','4','5'])
+i(3)  # ['1', '2', '3']
 ```
 
 ## 可变参数  
@@ -84,6 +153,19 @@ myfunc(1, 2, 3) # 1 2 3
 myfunc(1, 2, 3, a=10, b=20, c=30) # 1 2 3 a->10 b->20 c->30 
 ```
 
+### 编写只接受关键字参数的函数  
+
+出现在\*后面的参数，只能作为关键词参数使用。通过这一性质，可以设计只通过关键字形式接受特定参数的函数  
+
+```python
+def recv(maxsize, *, block):
+    'Receives a message'
+    pass
+
+recv(1024, True) # 报错
+recv(1024, block=True) # Ok
+```
+
 ## 函数修饰符  
 
 （1）修饰符是一个函数  
@@ -118,5 +200,6 @@ def page1() -> str:
 
 ## 参考  
 
+Python Cookbook Chapter 7  
 Head First Python Chapter 10  
 零基础学Python Chapter 6  
