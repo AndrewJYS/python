@@ -1,7 +1,3 @@
-# example.py
-#
-# Example of depth-first search using a generator
-
 class Node:
     def __init__(self, value):
         self._value = value
@@ -14,16 +10,23 @@ class Node:
         self._children.append(node)
 
     def __iter__(self):
-        """反向迭代"""
-        return reversed(self._children)
+        return iter(self._children)
 
     def depth_first(self):
         yield self
         for c in self:
             yield from c.depth_first()
 
-# Example
 if __name__ == '__main__':
+    root = Node(0)
+    child1 = Node(1)
+    child2 = Node(2)
+    root.add_child(child1)
+    root.add_child(child2)
+    for ch in root:
+        print(ch)
+    print('-------------------------------')
+
     root = Node(0)
     child1 = Node(1)
     child2 = Node(2)
@@ -35,6 +38,3 @@ if __name__ == '__main__':
 
     for ch in root.depth_first():
         print(ch)
-    for c in root:
-        print(c)
-    # Outputs: Node(0), Node(1), Node(3), Node(4), Node(2), Node(5)
