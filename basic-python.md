@@ -4,8 +4,8 @@
 
 ### 声明变量，定义变量  
 
-变量声明:规定了变量的类型和名字。  
-变量定义:除了规定了变量的类型和名字之外,还申请存储空间,也可能会为变量赋一个初始值。  
+所谓声明式(declaration) 是告诉编译器某个东西的名称和类型(type) ，但略去细节。  
+定义式(definition) 的任务是提供编译器一些声明式所遗漏的细节。对对象而百，定义式是编译器为此对象拨发内存的地点。对function 或function template 而言，定义式提供了代码本体。对class 或class template 而言，定义式列出它们的成员  
 
 ```c++
 // c++
@@ -208,6 +208,7 @@ print(bool({'q':1, 'er': 2}))
 
 ## 参考  
 
+Effective C++  
 C++ Primer Plus, Chapter 2, 3  
 Head First Python Chapter 4  
 零基础学Python Chapter 2  

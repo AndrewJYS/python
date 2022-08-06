@@ -5,8 +5,9 @@
 
 ## 参考  
 
+[Python Cookbook (3rd edition)](https://book.douban.com/subject/20491078/)  
 [Fluent Python (1st edition)](https://book.douban.com/subject/26278021/)  
-[Head first Python (2nd edition)](https://book.douban.com/subject/30203158/)
+[Head first Python (2nd edition)](https://book.douban.com/subject/30203158/)  
 [Python Crash Course (2nd edition)](https://book.douban.com/subject/26284937/)  
 [零基础学Python](https://book.douban.com/subject/30390008/)  
 [Introduction to programming with C++ (3rd edtion)](https://book.douban.com/subject/20056055/)  
